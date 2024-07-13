@@ -131,7 +131,8 @@ public class GalPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
         String extension = "";
         int lastDotIndex = name.lastIndexOf('.');
         if (lastDotIndex != -1 && lastDotIndex < name.length() - 1) {
-            extension = name.substring(lastDotIndex);
+            extension = name.substring(lastDotIndex);    
+            name = name.substring(0, lastDotIndex); // 去掉文件名中的后缀
         } else {
             ImageFormat imageFormat = Imaging.guessFormat(bytes);
             extension = "." + imageFormat.getDefaultExtension().toLowerCase();
