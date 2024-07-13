@@ -128,8 +128,14 @@ public class GalPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
 
     private void putMediaBytes(byte[] bytes, String album, String name)
             throws IOException, SecurityException {
-        ImageFormat imageFormat = Imaging.guessFormat(bytes);
-        String extension = "." + imageFormat.getDefaultExtension().toLowerCase();
+        String extension = "";
+        int lastDotIndex = name.lastIndexOf('.');
+        if (lastDotIndex != -1 && lastDotIndex < name.length() - 1) {
+            extension = name.substring(lastDotIndex);
+        } else {
+            ImageFormat imageFormat = Imaging.guessFormat(bytes);
+            extension = "." + imageFormat.getDefaultExtension().toLowerCase();
+        }
         try (InputStream in = new ByteArrayInputStream(bytes)) {
             writeData(in, true, name, extension, album);
         }
